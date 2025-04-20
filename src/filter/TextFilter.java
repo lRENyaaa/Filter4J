@@ -1,23 +1,20 @@
 package filter;
 
-import java.io.File;
-import java.util.ArrayList;
+import filter.layer.Layer;
+import filter.resource.ResourceReader;
+
+import java.io.FileInputStream;
 import java.util.List;
-import java.util.Scanner;
 
 public class TextFilter {
-    private static final String[] script;
+    private static final List<Layer> script;
     private static final Tokenizer tokenizer;
 
     static {
         try {
-            List<String> scriptList = new ArrayList<>();
-            Scanner sc = new Scanner(new File("judge.model"));
-            while (sc.hasNextLine()) {
-                scriptList.add(sc.nextLine());
-            }
-            script = scriptList.toArray(new String[0]);
-            tokenizer = Tokenizer.loadFromFile("tokenize.model");
+            script = ResourceReader.readResource(FileInputStream::new, "judge.model", reader -> ScriptCompiler.compile(reader.lines().toArray(String[]::new)));
+            tokenizer = ResourceReader.readResource(FileInputStream::new, "tokenize.model", Tokenizer::loadFromReader);
+
         } catch (Exception ex) {
             throw new ExceptionInInitializerError(ex);
         }
@@ -28,6 +25,6 @@ public class TextFilter {
     }
 
     public static boolean isIllegal(String text) {
-        return MinRt.doAi(tokenizer.tokenize(text), script) == 1;
+        return MinimalRuntime.doAi(tokenizer.tokenize(text), script) == 1;
     }
 }

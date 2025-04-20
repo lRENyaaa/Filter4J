@@ -1,7 +1,7 @@
 package filter;
 
-import java.io.File;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class Tokenizer {
     private final String[] vocab;
@@ -10,18 +10,13 @@ public class Tokenizer {
         this.vocab = vocab;
     }
 
-    public static Tokenizer loadFromFile(String filename) {
-        try {
-            Scanner scanner = new Scanner(new File(filename));
-            int size = Integer.parseInt(scanner.nextLine());
-            String[] vocab = new String[size];
-            for (int i = 0; i < size; i++) {
-                vocab[i] = scanner.nextLine();
-            }
-            return new Tokenizer(vocab);
-        } catch (Exception ignored) {
+    public static Tokenizer loadFromReader(BufferedReader reader) throws IOException {
+        int size = Integer.parseInt(reader.readLine());
+        String[] vocab = new String[size];
+        for (int i = 0; i < size; i++) {
+            vocab[i] = reader.readLine();
         }
-        return null;
+        return new Tokenizer(vocab);
     }
 
     public double[] tokenize(String text) {
