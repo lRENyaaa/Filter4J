@@ -1,4 +1,4 @@
-package filter.resource;
+package filter.v1.resource;
 
 import java.io.IOException;
 import java.io.InputStream;

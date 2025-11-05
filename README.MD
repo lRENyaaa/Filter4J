@@ -1,3 +1,7 @@
+关于此Fork
+---
+该Fork极大的优化了Filter4J的运行速度，除去初始化外均快于Filter4J MinRt和LL4J
+
 Filter4J
 ---
 Filter4J是一个极小化的，基于深度学习的，文本内容违规检测（文本内容安全、文本审核）库。

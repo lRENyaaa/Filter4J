@@ -1,6 +1,6 @@
-package filter;
+package filter.v2;
 
-import filter.resource.ResourceReader;
+import filter.v2.resource.ResourceReader;
 
 import java.io.FileInputStream;
 import java.util.List;
@@ -26,4 +26,5 @@ public class TextFilter {
     public static boolean isIllegal(String text) {
         return MinRt.doAi(tokenizer.tokenize(text), script) == 1;
     }
+
 }

@@ -1,4 +1,4 @@
-package filter;
+package filter.v1;
 
 import java.io.BufferedReader;
 import java.io.IOException;

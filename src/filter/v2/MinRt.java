@@ -1,4 +1,4 @@
-package filter;
+package filter.v2;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,6 +53,10 @@ public class MinRt {
 
         @Override
         public double[] forward(double[] input) {
+            if (Double.isNaN(input[0])) {
+                return initForward(input);
+            }
+
             if (input.length != inputCount) {
                 throw new RuntimeException("Wrong input size for Dense layer (expected " + inputCount + ", got " + input.length + ")");
             }
@@ -61,6 +65,25 @@ public class MinRt {
                 double sum = 0;
                 for (int j = 0; j < inputCount; j++) {
                     sum += input[j] * weights[j][i];
+                }
+                output[i] = sum;
+            }
+            return output;
+        }
+
+        private double[] initForward(double[] input) {
+            double[] output = new double[outputCount];
+            for (int i = 0; i < outputCount; i++) {
+                double sum = 0;
+                for (double v : input) {
+                    if (Double.isNaN(v)) {
+                        continue;
+                    }
+
+                    if (v > inputCount) {
+                        throw new RuntimeException("Wrong input size for Dense layer (expected " + inputCount + ", got " + input.length + ")");
+                    }
+                    sum += weights[(int) v][i];
                 }
                 output[i] = sum;
             }
