@@ -37,6 +37,6 @@ public class Tokenizer {
 
     public double[] tokenize(String text) {
         List<AhoCorasickDoubleArrayTrie.Hit<Integer>> hits = acdat.parseText(text);
-        return DoubleStream.concat(DoubleStream.of(Double.NaN), hits.stream().mapToDouble(v -> (double) v.value)).toArray();
+        return DoubleStream.concat(DoubleStream.of(Double.NaN), hits.stream().mapToDouble(v -> (double) v.value).distinct()).toArray();
     }
 }
